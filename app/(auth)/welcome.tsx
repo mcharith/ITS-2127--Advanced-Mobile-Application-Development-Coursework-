@@ -5,6 +5,7 @@ import Typo from '@/components/Typo'
 import { colors, spacingX, spacingY } from '@/constants/theme'
 import { verticaleScale } from '@/utils/styling'
 import Button from '@/components/Button'
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 
 const Welcome = () => {
   return (
@@ -16,7 +17,8 @@ const Welcome = () => {
             <Typo fontWeight={"500"} color='black'>Sign in</Typo>
           </TouchableOpacity>
 
-          <Image
+          <Animated.Image
+            entering={FadeIn.duration(500)}
             source = {require("../../assets/images/piggy-welcome.png")}
             style={styles.welcomeImage}
             resizeMode="contain"
@@ -25,21 +27,27 @@ const Welcome = () => {
 
         {/* footer */}
         <View style={styles.footer}>
-          <View style={{ alignItems: "center" }}>
+          <Animated.View
+            entering={FadeInDown.duration(1000).springify().damping(12)} 
+            style={{ alignItems: "center" }}>
             <Typo size={30} fontWeight={"800"} color={colors.neutral500}>Always take Control</Typo>
             <Typo size={30} fontWeight={"800"} color={colors.neutral500}>of your finance</Typo>
-          </View>
+          </Animated.View>
 
-          <View style={{ alignItems: "center", gap:2 }}>
+          <Animated.View
+            entering={FadeInDown.duration(1000).delay(100).springify().damping(12)}
+            style={{ alignItems: "center", gap:2 }}>
             <Typo size={17} color={colors.neutral400}>Finanace must be arranged to set a better</Typo>
             <Typo size={17} color={colors.neutral400}>lifestyle in future</Typo>
-          </View>
+          </Animated.View>
 
-          <View style={styles.buttonContainer}>
+          <Animated.View
+            entering={FadeInDown.duration(1000).delay(200).springify().damping(12)}
+            style={styles.buttonContainer}>
           <Button>
             <Typo size={22} fontWeight={"600"} color={colors.neutral900}>Get Started</Typo>
           </Button>
-        </View>
+          </Animated.View>
 
         </View>
       </View>
