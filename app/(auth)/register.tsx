@@ -9,24 +9,29 @@ import Input from '@/components/Inputs'
 import { At, LockIcon, UserIcon } from 'phosphor-react-native'
 import Button from '@/components/Button'
 import { useRouter } from 'expo-router'
+import { register } from '@/service/authService'
 
 const Register = () => {
 
-    const emailRef = useRef("");
-    const passwordRef = useRef("")
-    const nameRef = useRef("")
-    const [isLoading,setIsLoading] = useState(false)
     const router = useRouter()
+    const [isLoading,setIsLoading] = useState(false)
+    const [name,setName] = useState<string>("")
+    const [email,setEmail] = useState<string>("")
+    const [password,setPassword] = useState<string>("")
 
-    const handleSubmit = async ()=>{
-      if(!emailRef.current || !passwordRef.current || !nameRef.current){
-        Alert.alert("Sing up","Please fill all the fields.")
-        return
-      }
-      console.log("email:", emailRef.current)
-      console.log("name:", nameRef.current)
-      console.log("password:",passwordRef.current)
-      console.log("Good to go.")
+    const handleRegister = async ()=>{
+      setIsLoading(true)
+      await register(name,email,password)
+      .then((res) => {
+        router.navigate("/(auth)/login")
+      })
+      .catch((err) => {
+        console.log(err)
+        Alert.alert("Registration fail.","Something went wrong.")
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
     }
 
   return (
@@ -52,7 +57,8 @@ const Register = () => {
           {/* input */}
           <Input
             placeholder='Enter your name'
-            onChangeText={(value) => (nameRef.current = value)}
+            onChangeText={setName}
+            value={name}
             icon={<UserIcon size={verticaleScale(22)}
             color={colors.neutral400}
             weight="fill"
@@ -61,7 +67,8 @@ const Register = () => {
 
           <Input
             placeholder='Enter your email'
-            onChangeText={(value) => (emailRef.current = value)}
+            onChangeText={setEmail}
+            value={email}
             icon={<At size={verticaleScale(22)}
             color={colors.neutral400}
             weight="fill"
@@ -71,14 +78,15 @@ const Register = () => {
           <Input
             placeholder='Enter your password'
             secureTextEntry
-            onChangeText={(value) => (passwordRef.current = value)}
+            onChangeText={setPassword}
+            value={password}
             icon={<LockIcon size={verticaleScale(22)}
             color={colors.neutral400}
             weight="fill"
             />}
           />
 
-          <Button loading={isLoading} onPress={handleSubmit}>
+          <Button loading={isLoading} onPress={handleRegister}>
             <Typo fontWeight={"700"} color={colors.black} size={21}>Sign Up</Typo>
           </Button>
 
