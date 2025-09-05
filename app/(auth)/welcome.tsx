@@ -17,7 +17,7 @@ const Welcome = () => {
       <View style={styles.container}>
         {/* login button and image */}
         <View>
-          <TouchableOpacity onPress={()=> router.push('/(auth)/login')} style={styles.loginButton}>
+          <TouchableOpacity onPress={()=> router.push('/(tabs)')} style={styles.loginButton}>
             <Typo fontWeight={"500"} color='black'>Sign in</Typo>
           </TouchableOpacity>
 
