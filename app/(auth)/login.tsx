@@ -26,10 +26,16 @@ const Login = () => {
       setIsLoading(true)
       try{
         const res = await login(email,password)
-        router.push('/(auth)/welcome')
-      }catch(err){
-        console.log("Login error:",err)
-        Alert.alert("Login Failed","Invalid credintials or server error.")
+        router.push('/(tabs)')
+      } catch (err: any) {
+        console.log("Login error:", err);
+        let msg = "Something went wrong. Please try again.";
+        if (err.code === "auth/invalid-credential") {
+          msg = "Wrong credentials. Please check your email and password.";
+        } else if (err.code === "auth/too-many-requests") {
+          msg = "Too many failed attempts. Try again later.";
+        }
+        Alert.alert("Login failed", msg);
       }finally{
         setIsLoading(false)
       }
