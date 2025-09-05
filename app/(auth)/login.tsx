@@ -9,22 +9,30 @@ import Input from '@/components/Inputs'
 import { At, LockIcon } from 'phosphor-react-native'
 import Button from '@/components/Button'
 import { useRouter } from 'expo-router'
+import { login } from '@/service/authService'
 
 const Login = () => {
 
-    const emailRef = useRef("");
-    const passwordRef = useRef("")
-    const [isLoading,setIsLoading] = useState(false)
     const router = useRouter()
+    const [isLoading,setIsLoading] = useState(false)
+    const [email,setEmail] = useState<string>("")
+    const [password,setPassword] = useState<string>("")
 
-    const handleSubmit = async ()=>{
-      if(!emailRef.current || !passwordRef.current){
-        Alert.alert("Login","Please fill all the fields.")
+    const handleLogin = async ()=>{
+      if(!email || !password){
+        Alert.alert("Error","Please enter both email and password.")
         return
       }
-      console.log("email:", emailRef.current)
-      console.log("password:",passwordRef.current)
-      console.log("Good to go.")
+      setIsLoading(true)
+      try{
+        const res = await login(email,password)
+        router.push('/(auth)/welcome')
+      }catch(err){
+        console.log("Login error:",err)
+        Alert.alert("Login Failed","Invalid credintials or server error.")
+      }finally{
+        setIsLoading(false)
+      }
     }
 
   return (
@@ -50,7 +58,8 @@ const Login = () => {
           {/* input */}
           <Input
             placeholder='Enter your email'
-            onChangeText={(value) => (emailRef.current = value)}
+            onChangeText={setEmail}
+            value={email}
             icon={<At size={verticaleScale(22)}
             color={colors.neutral400}
             weight="fill"
@@ -60,7 +69,8 @@ const Login = () => {
           <Input
             placeholder='Enter your password'
             secureTextEntry
-            onChangeText={(value) => (passwordRef.current = value)}
+            onChangeText={setPassword}
+            value={password}
             icon={<LockIcon size={verticaleScale(22)}
             color={colors.neutral400}
             weight="fill"
@@ -71,7 +81,7 @@ const Login = () => {
             Forgot Password?
           </Typo>
 
-          <Button loading={isLoading} onPress={handleSubmit}>
+          <Button loading={isLoading} onPress={handleLogin}>
             <Typo fontWeight={"700"} color={colors.black} size={21}>Login</Typo>
           </Button>
 
