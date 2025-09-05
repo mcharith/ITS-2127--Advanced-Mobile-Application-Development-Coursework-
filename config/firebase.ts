@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { initializeAuth } from 'firebase/auth'
+import { getAuth, initializeAuth } from 'firebase/auth'
 import AsyncStorage, { AsyncStorageStatic } from '@react-native-async-storage/async-storage'
 import { getFirestore } from "firebase/firestore";
 
@@ -19,12 +19,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage)
-})
-
-export const firestore = getFirestore(app)
-
-function getReactNativePersistence(AsyncStorage: AsyncStorageStatic): import("@firebase/auth").Persistence | import("@firebase/auth").Persistence[] | undefined {
-  throw new Error("Function not implemented.");
-}
+export const auth = getAuth(app)
+export const db = getFirestore(app)
