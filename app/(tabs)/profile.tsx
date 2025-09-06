@@ -8,6 +8,7 @@ import BackButton from '@/components/BackButton'
 import Typo from '@/components/Typo'
 import { useAuth } from '@/context/AuthContext'
 import { Image } from 'expo-image'
+import { getProfileImage } from '@/service/imageService'
 
 const Profile = () => {
 
@@ -24,7 +25,7 @@ const Profile = () => {
           <View>
             {/* user image */}
             <Image 
-              source={user?.photoURL ? { uri: user.photoURL } : require("../../assets/images/defaultAvatar.png")}
+              source={getProfileImage(user?.photoURL ?? undefined)}
               style={styles.avatar}
               contentFit="cover"
               transition={100}
