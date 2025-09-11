@@ -15,10 +15,12 @@ import index from '..'
 import Animated, { FadeInDown } from 'react-native-reanimated'
 import { signOut } from 'firebase/auth'
 import { auth } from '@/firebase'
+import { useRouter } from 'expo-router'
 
 const Profile = () => {
 
   const {user} = useAuth()
+  const router = useRouter()
 
   const accountOption: accountOptionType[] = [
     {
@@ -71,7 +73,7 @@ const Profile = () => {
       showLogoutAlert()
     }
 
-    
+    // if(item.routeName)
   }
 
   return (
