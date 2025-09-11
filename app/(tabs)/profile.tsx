@@ -26,7 +26,7 @@ const Profile = () => {
     {
       title: "Edit Profile",
       icon:<UserIcon size={26} color={colors.white} weight='fill'/>,
-      // routeName= "/(modals)/profileModel",
+      routeName: '(modals)/profileModal',
       bgColor: "#6366f1"
     },
     {
@@ -73,7 +73,7 @@ const Profile = () => {
       showLogoutAlert()
     }
 
-    // if(item.routeName)
+    if(item.routeName) router.push(item.routeName);
   }
 
   return (
