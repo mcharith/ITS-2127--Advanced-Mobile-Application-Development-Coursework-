@@ -12,6 +12,7 @@ export type ScreenWrapperProps = {
 export type ModelWrapperProps = {
     style?: ViewStyle;
     children: React.ReactNode;
+    bg?: string;
 }
 
 export type accountOptionType = {

@@ -2,8 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, initializeAuth } from 'firebase/auth'
-import AsyncStorage, { AsyncStorageStatic } from '@react-native-async-storage/async-storage'
+import { getAuth } from 'firebase/auth'
 import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
