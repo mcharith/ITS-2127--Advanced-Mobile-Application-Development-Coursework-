@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import ScreenWrapper from '@/components/ScreenWrapper'
 import { colors, radius, spacingX, spacingY } from '@/constants/theme'
@@ -9,10 +9,70 @@ import Typo from '@/components/Typo'
 import { useAuth } from '@/context/AuthContext'
 import { Image } from 'expo-image'
 import { getProfileImage } from '@/service/imageService'
+import { accountOptionType } from '@/types'
+import { CaretRightIcon, GearSixIcon, LockIcon, PowerIcon, UserIcon } from 'phosphor-react-native'
+import index from '..'
+import Animated, { FadeInDown } from 'react-native-reanimated'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase'
 
 const Profile = () => {
 
   const {user} = useAuth()
+
+  const accountOption: accountOptionType[] = [
+    {
+      title: "Edit Profile",
+      icon:<UserIcon size={26} color={colors.white} weight='fill'/>,
+      // routeName= "/(modals)/profileModel",
+      bgColor: "#6366f1"
+    },
+    {
+      title: "Setting",
+      icon:<GearSixIcon size={26} color={colors.white} weight='fill'/>,
+      // routeName= "/(modals)/profileModel",
+      bgColor: "#059669"
+    },
+    {
+      title: "Privacy Policy",
+      icon:<LockIcon size={26} color={colors.white} weight='fill'/>,
+      // routeName= "/(modals)/profileModel",
+      bgColor: colors.neutral600
+    },
+    {
+      title: "Logout",
+      icon:<PowerIcon size={26} color={colors.white} weight='fill'/>,
+      // routeName= "/(modals)/profileModel",
+      bgColor: "#e11d48"
+    },
+  ]
+
+  const handelLogout = async () => {
+    await signOut(auth)
+  }
+
+  const showLogoutAlert = () =>{
+    Alert.alert("Comfirm", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        onPress: ()=> console.log('cancel logout'),
+        style: 'cancel'
+      },
+      {
+        text: "Logout",
+        onPress: ()=> handelLogout(),
+        style: 'destructive'
+      }
+    ])
+  } 
+
+  const handelPress = (item: accountOptionType) =>{
+    if(item.title == 'Logout'){
+      showLogoutAlert()
+    }
+
+    
+  }
 
   return (
     <ScreenWrapper>
@@ -40,6 +100,44 @@ const Profile = () => {
               {user?.email}
             </Typo>
           </View>
+        </View>
+
+        {/* account option */}
+        <View style={styles.accountOption }>
+          {accountOption.map((item, index) => {
+            return (
+              <Animated.View
+                key={index.toString()}
+                entering={FadeInDown.delay(index * 50)
+                  .springify()
+                  .damping(14)
+                }
+                style={styles.listItem}
+              >
+                <TouchableOpacity style={styles.flexRow} onPress={() => handelPress(item)}>
+                  {/* icon */}
+                  <View
+                    style={[
+                      styles.listIcon,
+                      {
+                        backgroundColor: item?.bgColor,
+                      },
+                    ]}
+                  >
+                    {item.icon && item.icon}
+                  </View>
+                  <Typo size={16} style={{flex: 1}} fontWeight={"500"}>
+                    {item.title}
+                  </Typo>
+                  <CaretRightIcon 
+                    size={verticaleScale(20)}
+                    weight="bold"
+                    color={colors.black}
+                  />
+                </TouchableOpacity>
+              </Animated.View>
+            )
+          })}
         </View>
       </View>
     </ScreenWrapper>

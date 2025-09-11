@@ -5,6 +5,8 @@ import Typo from '@/components/Typo'
 import { logout } from '@/service/authService'  
 import { useRouter } from 'expo-router'      
 import ScreenWrapper from '@/components/ScreenWrapper'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase'
 
 const Home = () => {
   const [loading, setLoading] = useState(false)
@@ -13,7 +15,7 @@ const Home = () => {
   const handleLogout = async () => {
     try {
       setLoading(true)
-      await logout()                
+      await signOut(auth)                
       router.replace('/(auth)/login') 
     } catch (e:any) {
       console.error(e)
@@ -26,9 +28,6 @@ const Home = () => {
   return (
     <ScreenWrapper>
       <Text>Home</Text>
-      <Button onPress={handleLogout} loading={loading}>
-        <Typo>Logout</Typo>
-      </Button>
     </ScreenWrapper>
   )
 }
