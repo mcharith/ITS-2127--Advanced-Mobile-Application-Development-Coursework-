@@ -117,7 +117,7 @@ export type ImageUploadProps = {
     onClear: () => void
     containerStyle?: ViewStyle
     imageStyle?: ViewStyle
-    placeHolder?: string
+    placeholder?: string
 }
 
 export type UserType = {

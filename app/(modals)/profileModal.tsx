@@ -16,8 +16,11 @@ import { useAuth } from '@/context/AuthContext'
 import * as ImagePicker from 'expo-image-picker';
 import { updateUser } from '@/service/userService'
 import { updateProfile } from 'firebase/auth'
+import { useRouter } from 'expo-router'
 
 const ProfileModal = () => {
+
+  const router = useRouter()
 
   const {user} = useAuth()
   
@@ -73,7 +76,9 @@ const ProfileModal = () => {
       displayName: name,
       photoURL: typeof image === "string" ? image : null,
     });
-    Alert.alert("Success", "Profile updated successfully");
+    Alert.alert("Success", "Profile updated successfully", [
+      { text: "OK", onPress: () => router.back() },
+    ]);
   } catch (err: any) {
     console.log("Profile update error: ", err);
     Alert.alert("Error", err.message || "Something went wrong.");
