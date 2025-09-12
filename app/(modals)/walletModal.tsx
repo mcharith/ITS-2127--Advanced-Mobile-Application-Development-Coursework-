@@ -10,57 +10,76 @@ import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { WalletType } from '@/types'
 import Button from '@/components/Button'
 import { useAuth } from '@/context/AuthContext'
-import { useRouter } from 'expo-router'
+import { useLocalSearchParams, useRouter } from 'expo-router'
 import ImageUpload from '@/components/ImageUpload'
 import { createOrUpdateWallet } from '@/service/walletService'
+import { TrashIcon } from 'phosphor-react-native'
 
 const WalletModal = () => {
 
-  const router = useRouter()
+        const router = useRouter()
 
-  const {user} = useAuth()
-  
-  const[wallet, setWallet] = useState<WalletType>({
-    name: "",
-    image: null,
-  })
+        const {user} = useAuth()
+        
+        const[wallet, setWallet] = useState<WalletType>({
+          name: "",
+          image: null,
+        })
 
-  const [loading,setLoading] = useState(false)
+        const [loading,setLoading] = useState(false)
 
-  const onSubmit = async () => {
-  let { name, image } = wallet;
+        const oldWallet: {name: string; image:string; id:string} = 
+        useLocalSearchParams();
+        
+        useEffect(() => {
+        if (oldWallet?.id) {
+          setWallet({
+            name: oldWallet.name,
+            image: oldWallet.image,
+          });
+        }
+        }, [oldWallet?.id, oldWallet?.name, oldWallet?.image]); 
 
-  if (!name.trim()) {
-    Alert.alert("Wallet", "Please fill all the fields.");
-    return;
-  }
+        const onSubmit = async () => {
+        let { name, image } = wallet;
 
-  if (!user?.uid) {
-    Alert.alert("Wallet", "User not found.");
-    return;
-  }
+        if (!name.trim()) {
+          Alert.alert("Wallet", "Please fill all the fields.");
+          return;
+        }
 
-  const data: WalletType = {
-    name,
-    image,
-    uid: user.uid,
-  };
+        if (!user?.uid) {
+          Alert.alert("Wallet", "User not found.");
+          return;
+        }
 
-  setLoading(true);
-  const res = await createOrUpdateWallet(data);
-  setLoading(false);
+        const data: WalletType = {
+          name,
+          image,
+          uid: user.uid,
+        };
+        if(oldWallet?.id) data.id = oldWallet?.id
+        setLoading(true);
+        const res = await createOrUpdateWallet(data);
+        setLoading(false);
 
-  if (res.success) {
-    router.back();
-  } else {
-    Alert.alert("Wallet", res.msg);
-  }
-};
+        if (res.success) {
+          router.back();
+        } else {
+          Alert.alert("Wallet", res.msg);
+        }
+      };
+
+      
 
   return (
     <ModalWrapper>
       <View style={styles.container}>
-        <Header title='New Wallet' leftIcon={<BackButton/>} style={{marginBottom: spacingY._10}}/>
+        <Header 
+          title={oldWallet?.id ? "Update Wallet":"New Wallet"}
+          leftIcon={<BackButton/>} 
+          style={{marginBottom: spacingY._10}}
+        />
 
         {/* form  */}
         <ScrollView contentContainerStyle={styles.form}>
@@ -90,7 +109,11 @@ const WalletModal = () => {
     {/* footer  */}
     <View style={styles.footer}>
       <Button onPress={onSubmit} loading={loading} style={{flex:1}}>
-        <Typo color={colors.white} fontWeight={"700"}>Add Wallet</Typo>
+        <Typo color={colors.white} fontWeight={"700"}>
+          {
+            oldWallet.id ? "Update Wallet" : "Add Wallet"
+          }
+        </Typo>
       </Button>
     </View>
 
