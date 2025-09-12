@@ -3,21 +3,16 @@ import Header from '@/components/Header'
 import ModalWrapper from '@/components/ModalWrapper'
 import Typo from '@/components/Typo'
 import { colors, spacingX, spacingY } from '@/constants/theme'
-import { getProfileImage } from '@/service/imageService'
 import { scale, verticaleScale } from '@/utils/styling'
-import { Image } from 'expo-image'
-import { PencilIcon } from 'phosphor-react-native'
 import Input from '@/components/Inputs'
 import React, { useEffect, useState } from 'react'
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { WalletType } from '@/types'
 import Button from '@/components/Button'
 import { useAuth } from '@/context/AuthContext'
-import * as ImagePicker from 'expo-image-picker';
-import { updateUser } from '@/service/userService'
-import { updateProfile } from 'firebase/auth'
 import { useRouter } from 'expo-router'
 import ImageUpload from '@/components/ImageUpload'
+import { createOrUpdateWallet } from '@/service/walletService'
 
 const WalletModal = () => {
 
@@ -32,54 +27,33 @@ const WalletModal = () => {
 
   const [loading,setLoading] = useState(false)
 
-  
-
-  const onPickImage = async () => {
-     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 0.5,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      // setUserData({...userData, image:result.assets[0].uri});
-    }
-  }
-
   const onSubmit = async () => {
   let { name, image } = wallet;
+
   if (!name.trim()) {
-    Alert.alert("Error", "Please fill all the fields.");
-    console.log("error")
-    
+    Alert.alert("Wallet", "Please fill all the fields.");
     return;
   }
-  try {
-    setLoading(true);
-    if (!user) {
-      Alert.alert("Error", "User not found.");
-      return;
-    }
-    const res = await updateUser(user.uid, { name, image });
-    if (!res.success) {
-      Alert.alert("Error", res.msg || "Failed to update profile.");
-      return;
-    }
-    await updateProfile(user, {
-      displayName: name,
-      photoURL: typeof image === "string" ? image : null,
-    });
-    Alert.alert("Success", "Profile updated successfully", [
-      { text: "OK", onPress: () => router.back() },
-    ]);
-  } catch (err: any) {
-    console.log("Profile update error: ", err);
-    Alert.alert("Error", err.message || "Something went wrong.");
-  } finally {
-    setLoading(false);
+
+  if (!user?.uid) {
+    Alert.alert("Wallet", "User not found.");
+    return;
+  }
+
+  const data: WalletType = {
+    name,
+    image,
+    uid: user.uid,
+  };
+
+  setLoading(true);
+  const res = await createOrUpdateWallet(data);
+  setLoading(false);
+
+  if (res.success) {
+    router.back();
+  } else {
+    Alert.alert("Wallet", res.msg);
   }
 };
 
