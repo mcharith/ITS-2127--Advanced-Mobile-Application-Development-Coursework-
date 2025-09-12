@@ -12,7 +12,7 @@ import Button from '@/components/Button'
 import { useAuth } from '@/context/AuthContext'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import ImageUpload from '@/components/ImageUpload'
-import { createOrUpdateWallet } from '@/service/walletService'
+import { createOrUpdateWallet, deleteWallet } from '@/service/walletService'
 import { TrashIcon } from 'phosphor-react-native'
 
 const WalletModal = () => {
@@ -70,7 +70,36 @@ const WalletModal = () => {
         }
       };
 
-      
+      const onDelete = async () => {
+        if (!oldWallet?.id) return;
+        setLoading(true)
+        const res = await deleteWallet(oldWallet?.id)
+        setLoading(false)
+        if(res.success){
+          router.back();
+        }else{
+          Alert.alert("Wallet",res.msg)
+        }
+      }
+
+      const showDeleteAlert = () => {
+        Alert.alert(
+          "Confirm",
+          "Are you sure want to do this?\nThis action will remove all the transactions.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("cancel delete"),
+              style: 'cancel'
+            },
+            {
+              text: "Delete",
+              onPress: () => onDelete(),
+              style: 'destructive'
+            }
+          ]
+        )
+      }
 
   return (
     <ModalWrapper>
@@ -108,6 +137,23 @@ const WalletModal = () => {
 
     {/* footer  */}
     <View style={styles.footer}>
+      {
+        oldWallet?.id && !loading && (
+          <Button
+            onPress={showDeleteAlert}
+            style={{
+              backgroundColor: colors.rose,
+              paddingHorizontal: spacingX._15,
+            }}
+          >
+            <TrashIcon 
+              color={colors.white}
+              size={verticaleScale(24)}
+              weight="bold"
+            />
+          </Button>
+        )
+      }
       <Button onPress={onSubmit} loading={loading} style={{flex:1}}>
         <Typo color={colors.white} fontWeight={"700"}>
           {

@@ -1,7 +1,7 @@
-// context/AuthContext.tsx
 import { auth } from "@/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 
 const AuthContext = createContext<{ user: User | null; loading: boolean }>({
   user: null,
@@ -9,6 +9,8 @@ const AuthContext = createContext<{ user: User | null; loading: boolean }>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setIsLoading] = useState<boolean>(true);
 
@@ -16,6 +18,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser ?? null);
       setIsLoading(false);
+
+      if (firebaseUser) {
+        router.replace('/(tabs)');
+      } else {
+        router.replace("/(auth)/login");
+      }
     });
 
     return unsubscribe;
