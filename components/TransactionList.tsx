@@ -7,6 +7,7 @@ import Typo from './Typo'
 import { FlashList } from "@shopify/flash-list";
 import Loading from './Loading'
 import { expenseCategories } from '@/constants/data'
+import Animated, { FadeInDown } from 'react-native-reanimated'
 
 const TransactionList = ({
     data,
@@ -57,8 +58,8 @@ const TransactionItem = ({
     let category = expenseCategories["utilities"];
     const IconComponent = category.icon;
     return (
-        <View>
-            <TouchableOpacity style={styles.row}>
+        <Animated.View entering={FadeInDown.delay(index * 70).springify().damping(14)}>
+            <TouchableOpacity style={styles.row} onPress={() => handleClick(item)}>
                 <View style={[styles.icon, {backgroundColor:category.bgColor}]}>
                     {IconComponent && (
                         <IconComponent 
@@ -80,7 +81,7 @@ const TransactionItem = ({
                 </View>
 
             </TouchableOpacity>
-        </View>
+        </Animated.View>
     )
 }
 

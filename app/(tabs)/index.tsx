@@ -10,7 +10,7 @@ import { auth } from '@/firebase'
 import { useAuth } from '@/context/AuthContext'
 import { colors, spacingX, spacingY } from '@/constants/theme'
 import { verticaleScale } from '@/utils/styling'
-import { MagnifyingGlassIcon } from 'phosphor-react-native'
+import { MagnifyingGlassIcon, PlusIcon } from 'phosphor-react-native'
 import HomeCard from '@/components/HomeCard'
 import TransactionList from '@/components/TransactionList'
 
@@ -51,8 +51,15 @@ const Home = () => {
             emptyListMessage="No Transaction added yet!"
             title="Recent Transactions" 
           />
-
         </ScrollView>
+
+        <Button style={styles.floatingButton}>
+          <PlusIcon 
+            color={colors.black}
+            weight="bold"
+            size={verticaleScale(24)}
+          />
+        </Button>
 
       </View>
     </ScreenWrapper>
