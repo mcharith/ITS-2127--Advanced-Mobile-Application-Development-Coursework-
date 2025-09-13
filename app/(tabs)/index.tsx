@@ -53,7 +53,7 @@ const Home = () => {
           />
         </ScrollView>
 
-        <Button style={styles.floatingButton}>
+        <Button style={styles.floatingButton} onPress={() => router.push('/(modals)/transactionModal')}>
           <PlusIcon 
             color={colors.black}
             weight="bold"

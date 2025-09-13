@@ -71,7 +71,7 @@ export type TransactionType = {
 }
 
 export type CategoryType = {
-    lable: string
+    label: string
     value: string
     icon: Icon
     bgColor: string
