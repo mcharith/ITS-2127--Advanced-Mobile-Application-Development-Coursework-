@@ -100,9 +100,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         width: "100%", 
         height:Platform.OS == "ios" ? verticaleScale(73) : verticaleScale(55),
-        backgroundColor: colors.neutral400,
+        backgroundColor: "#363753",
         justifyContent: "space-around",
-        borderTopColor: colors.neutral600,
+        // borderTopColor: colors.neutral600,
         borderTopWidth: 1,
     },
     tabbarItem:{

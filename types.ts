@@ -82,7 +82,7 @@ export type ExpensesCategoriesType = {
 }
 
 export type TransactionListType = {
-    date: TransactionType[]
+    data: TransactionType[]
     title?: string
     loading?: boolean
     emptyListMessage?: string
