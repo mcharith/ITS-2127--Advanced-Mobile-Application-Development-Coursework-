@@ -94,10 +94,10 @@ const TransactionModal = () => {
             return;
           }
           let transactionData: TransactionType ={
-            type,amount,description,category,date,walletId,image,uid:user?.uid
+            type,amount,description,category,date,walletId,image: image ? image :null,uid:user?.uid
           }
 
-          //include transaction id for updating
+          if(oldTransaction?.id) transactionData.id = oldTransaction.id;
           setLoading(true)
           const res = await createOrUpdateTransaction(transactionData)
           setLoading(false)
