@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { TransactionItemProps, TransactionListType } from '@/types'
+import { TransactionItemProps, TransactionListType, TransactionType } from '@/types'
 import { colors, radius, spacingX, spacingY } from '@/constants/theme'
 import { verticaleScale } from '@/utils/styling'
 import Typo from './Typo'
@@ -9,6 +9,7 @@ import Loading from './Loading'
 import { expenseCategories, incomeCategory } from '@/constants/data'
 import Animated, { FadeInDown } from 'react-native-reanimated'
 import { Timestamp } from 'firebase/firestore'
+import { useRouter } from 'expo-router'
 
 const TransactionList = ({
     data,
@@ -17,8 +18,23 @@ const TransactionList = ({
     emptyListMessage
 }: TransactionListType) => {
 
-    const handleClick = () => {
+    const router = useRouter()
 
+    const handleClick = (item:TransactionType) => {
+        router.push({
+            pathname: "/(modals)/transactionModal",
+            params:{
+                id: item?.id,
+                type: item?.type,
+                amount: item?.amount,
+                category: item?.category,
+                date: (item.date as Timestamp)?.toDate()?.toISOString(),
+                description: item?.description,
+                image: item?.image,
+                uid: item?.uid,
+                walletId: item.walletId
+            }
+        })
     }
 
   return (
@@ -80,7 +96,7 @@ const TransactionItem = ({
 
                 <View style={styles.categoryDes}>
                     <Typo size={17}>{category.label}</Typo>
-                    <Typo size={12} color={colors.neutral500} textProps={{numberOfLines: 1}}>{item?.decription}</Typo>
+                    <Typo size={12} color={colors.neutral500} textProps={{numberOfLines: 1}}>{item?.description}</Typo>
                 </View>
 
                 <View style={styles.amountDate}>

@@ -31,7 +31,7 @@ const TransactionModal = () => {
         const[transaction, setTransaction] = useState<TransactionType>({
           type: 'expense',
           amount: 0,
-          decription: "",
+          description: "",
           category: "",
           date: new Date(),
           walletId: "",
@@ -50,7 +50,19 @@ const TransactionModal = () => {
           orderBy("created","desc")
         ])
 
-        const oldTransaction: {name: string; image:string; id:string} = 
+        type paramTypes = {
+          id?: string
+          type: string
+          amount: string
+          category?: string
+          date: string
+          description?: string;
+          image?: any;
+          uid?: string;
+          walletId: string;
+        }
+
+        const oldTransaction: paramTypes = 
         useLocalSearchParams();
 
         const onDateChange = (event: any, selectedDate: any) =>{
@@ -59,24 +71,30 @@ const TransactionModal = () => {
           setShowDatePicker(Platform.OS == "ios" ? true : false);
         }
         
-        // useEffect(() => {
-        // if (oldWallet?.id) {
-        //   setWallet({
-        //     name: oldWallet.name,
-        //     image: oldWallet.image,
-        //   });
-        // }
-        // }, [oldWallet?.id, oldWallet?.name, oldWallet?.image]); 
+        useEffect(() => {
+        if (oldTransaction?.id) {
+          setTransaction({
+            type: oldTransaction?.type,
+            amount: Number(oldTransaction.amount),
+            description: oldTransaction?.description || "",
+            category: oldTransaction?.category || "",
+            date: new Date(oldTransaction.date),
+            walletId: oldTransaction.walletId,
+            image: oldTransaction?.image
+          })
+          console.log("Desc is :",oldTransaction.description)
+        }
+        }, []); 
 
         const onSubmit = async () => {
-          const {type, amount, decription, category,date,walletId,image} = transaction
+          const {type, amount, description, category,date,walletId,image} = transaction
 
           if(!walletId || !date ||!amount || (type == "expense" && !category)){
             Alert.alert("Transaction","Please fill the all fields.")
             return;
           }
           let transactionData: TransactionType ={
-            type,amount,decription,category,date,walletId,image,uid:user?.uid
+            type,amount,description,category,date,walletId,image,uid:user?.uid
           }
 
           //include transaction id for updating
@@ -271,7 +289,7 @@ const TransactionModal = () => {
             </View>
 
             <Input 
-              value={transaction.decription}
+              value={transaction.description}
               multiline
               containerStyle={{
                 flexDirection: "row",
@@ -282,7 +300,7 @@ const TransactionModal = () => {
               onChangeText={(value) => {
                 setTransaction({
                   ...transaction,
-                  decription: value,
+                  description: value,
               })}
             }
             />
