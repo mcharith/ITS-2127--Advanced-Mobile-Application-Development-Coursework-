@@ -4,7 +4,7 @@ import { colors } from '@/constants/theme'
 
 const Loading: React.FC<ActivityIndicatorProps> = ({
   size = "large",
-  color = colors.primary,
+  color = colors.secondary,
   ...rest
 }) => {
   return (

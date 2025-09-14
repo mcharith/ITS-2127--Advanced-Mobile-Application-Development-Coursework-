@@ -13,7 +13,7 @@ export default function CustomTabs({ state, descriptors, navigation }: BottomTab
             <HouseIcon
             size={verticaleScale(30)}
             weight={isFocused ? "fill" : "regular"}
-            color={isFocused ? colors.primary : colors.neutral300}
+            color={isFocused ? colors.secondary : colors.neutral300}
             />
         ),
 
@@ -21,7 +21,7 @@ export default function CustomTabs({ state, descriptors, navigation }: BottomTab
             <ChartBarIcon
             size={verticaleScale(30)}
             weight={isFocused ? "fill" : "regular"}
-            color={isFocused ? colors.primary : colors.neutral300}
+            color={isFocused ? colors.secondary : colors.neutral300}
             />
         ),
 
@@ -29,7 +29,7 @@ export default function CustomTabs({ state, descriptors, navigation }: BottomTab
             <WalletIcon
             size={verticaleScale(30)}
             weight={isFocused ? "fill" : "regular"}
-            color={isFocused ? colors.primary : colors.neutral300}
+            color={isFocused ? colors.secondary : colors.neutral300}
             />
         ),
 
@@ -37,7 +37,7 @@ export default function CustomTabs({ state, descriptors, navigation }: BottomTab
             <UserIcon
             size={verticaleScale(30)}
             weight={isFocused ? "fill" : "regular"}
-            color={isFocused ? colors.primary : colors.neutral300}
+            color={isFocused ? colors.secondary : colors.neutral300}
             />
         ),
     };
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     tabbar:{ 
         flexDirection: 'row', 
         width: "100%", 
-        height:Platform.OS == "ios" ? verticaleScale(73) : verticaleScale(55),
+        height:Platform.OS == "ios" ? verticaleScale(70) : verticaleScale(55),
         backgroundColor: "#363753",
         justifyContent: "space-around",
         // borderTopColor: colors.neutral600,

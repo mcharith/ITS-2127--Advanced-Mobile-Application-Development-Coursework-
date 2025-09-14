@@ -87,7 +87,7 @@ const Register = () => {
           />
 
           <Button loading={isLoading} onPress={handleRegister}>
-            <Typo fontWeight={"700"} color={colors.black} size={21}>Sign Up</Typo>
+            <Typo fontWeight={"700"} color={colors.white} size={21}>Sign Up</Typo>
           </Button>
 
         </View>

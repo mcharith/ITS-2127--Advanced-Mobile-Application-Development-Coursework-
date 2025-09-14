@@ -88,7 +88,7 @@ const Login = () => {
           </Typo>
 
           <Button loading={isLoading} onPress={handleLogin}>
-            <Typo fontWeight={"700"} color={colors.black} size={21}>Login</Typo>
+            <Typo fontWeight={"700"} color={colors.white} size={21}>Login</Typo>
           </Button>
 
         </View>

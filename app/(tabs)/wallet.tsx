@@ -48,7 +48,7 @@ const Wallet = () => {
             <TouchableOpacity onPress={() => router.push('/(modals)/walletModal')}>
               <PlusCircleIcon 
                 weight='fill'
-                color={colors.primaryLight}
+                color={colors.secondary}
                 size={verticaleScale(33)}
               />
             </TouchableOpacity>

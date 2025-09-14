@@ -34,12 +34,12 @@ const Home = () => {
     } = useFetchData<TransactionType>("transactions", constraints)
 
   return (
-    <ScreenWrapper style={{backgroundColor:colors.neutral350}}>
+    <ScreenWrapper style={{backgroundColor:colors.white}}>
       <View style={styles.container}>
         {/* header */}
         <View style={styles.header}>
           <View style={{gap:1}}>
-            <Typo size={16} color={colors.neutral400}>Hello,</Typo>
+            <Typo size={16} color={colors.third}>Hello,</Typo>
             <Typo size={20} fontWeight={"600"}>{user?.displayName}</Typo>
           </View>
           <TouchableOpacity onPress={() => router.push('/(modals)/searchModal')} style={styles.searchIcon}>
@@ -70,7 +70,7 @@ const Home = () => {
 
         <Button style={styles.floatingButton} onPress={() => router.push('/(modals)/transactionModal')}>
           <PlusIcon 
-            color={colors.black}
+            color={colors.white}
             weight="bold"
             size={verticaleScale(24)}
           />

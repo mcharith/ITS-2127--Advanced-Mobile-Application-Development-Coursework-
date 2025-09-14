@@ -63,11 +63,11 @@ const HomeCard = () => {
                         <View style={styles.statusIcon}>
                             <ArrowDownIcon 
                                 size={verticaleScale(14)}
-                                color={colors.black}
+                                color={colors.green}
                                 weight="bold"
                             />
                         </View>
-                        <Typo size={15} color={colors.neutral700} fontWeight={"500"}>Income</Typo>
+                        <Typo size={15} color={colors.black} fontWeight={"500"}>Income</Typo>
                     </View>
                     <View style={{alignSelf: "center"}}>
                         <Typo size={15} color={colors.green} fontWeight={"600"}>
@@ -82,11 +82,11 @@ const HomeCard = () => {
                         <View style={styles.statusIcon}>
                             <ArrowUpIcon 
                                 size={verticaleScale(14)}
-                                color={colors.black}
+                                color={colors.rose}
                                 weight="bold"
                             />
                         </View>
-                        <Typo size={15} color={colors.neutral700} fontWeight={"500"}>Expense</Typo>
+                        <Typo size={15} color={colors.black} fontWeight={"500"}>Expense</Typo>
                     </View>
                     <View style={{alignSelf: "center"}}>
                         <Typo size={15} color={colors.rose} fontWeight={"600"}>

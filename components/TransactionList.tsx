@@ -102,7 +102,7 @@ const TransactionItem = ({
                 <View style={styles.amountDate}>
                     <Typo size={15} fontWeight={"500"} 
                     color={item?.type == "income" ? colors.green : colors.rose}> 
-                        {`${item?.type == "income" ? "+ LKR" : "- LKR"}${item?.amount}`}
+                        {`${item?.type == "income" ? "+ LKR " : "- LKR "}${item?.amount}`}
                     </Typo>
                     <Typo size={13} color={colors.neutral500}>{date}</Typo>
                 </View>
