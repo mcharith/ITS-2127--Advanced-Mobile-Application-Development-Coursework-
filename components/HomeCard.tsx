@@ -5,12 +5,37 @@ import { colors, spacingX, spacingY } from '@/constants/theme'
 import { ImageBackground } from 'expo-image'
 import Typo from './Typo'
 import { ArrowDownIcon, ArrowUpIcon, DotsThreeOutlineIcon } from 'phosphor-react-native'
+import { useAuth } from '@/context/AuthContext'
+import useFetchData from '@/hooks/useFetchData'
+import { WalletType } from '@/types'
+import { orderBy, where } from 'firebase/firestore'
 
 const HomeCard = () => {
+
+    const {user} = useAuth()
+
+    const {
+        data:wallets, 
+        error, 
+        loading: walletLoading
+    } = useFetchData<WalletType>("wallets",[
+        where("uid", "==", user?.uid),
+        orderBy("created","desc")
+    ])
+
+    const getTotal = () => {
+        return wallets.reduce((totals:any, items:WalletType)=>{
+            totals.balance = totals.balance + Number(items.amount);
+            totals.income = totals.income + Number(items.totalIncome);
+            totals.expenses = totals.expenses + Number(items.totalExpenses);
+            return totals;
+        },{balance:0,income:0,expenses:0})
+    }
+
   return (
     <ImageBackground
         source={require("../assets/images/card.png")}
-        resizeMode="stretch"
+        contentFit="fill"
         style={styles.bgImage}
     >
         <View style={styles.container}>
@@ -25,7 +50,9 @@ const HomeCard = () => {
                         weight="fill"
                     />
                 </View>
-                <Typo size={30} color={colors.black} fontWeight={"bold"}>LKR 50000.00</Typo>
+                <Typo size={30} color={colors.black} fontWeight={"bold"}>
+                    LKR {walletLoading ? "---" : getTotal()?.balance.toFixed(2)}
+                </Typo>
             </View>
 
             {/* expense and income */}
@@ -43,7 +70,9 @@ const HomeCard = () => {
                         <Typo size={15} color={colors.neutral700} fontWeight={"500"}>Income</Typo>
                     </View>
                     <View style={{alignSelf: "center"}}>
-                        <Typo size={15} color={colors.green} fontWeight={"600"}>LKR 50000</Typo>
+                        <Typo size={15} color={colors.green} fontWeight={"600"}>
+                            LKR {walletLoading ? "---" :getTotal()?.income.toFixed(2)}
+                        </Typo>
                     </View>
                 </View>
 
@@ -60,7 +89,9 @@ const HomeCard = () => {
                         <Typo size={15} color={colors.neutral700} fontWeight={"500"}>Expense</Typo>
                     </View>
                     <View style={{alignSelf: "center"}}>
-                        <Typo size={15} color={colors.rose} fontWeight={"600"}>LKR 2342</Typo>
+                        <Typo size={15} color={colors.rose} fontWeight={"600"}>
+                            LKR {walletLoading ? "---" : getTotal()?.expenses.toFixed(2)}
+                        </Typo>
                     </View>
                 </View>
             </View>
