@@ -42,7 +42,7 @@ const Home = () => {
             <Typo size={16} color={colors.neutral400}>Hello,</Typo>
             <Typo size={20} fontWeight={"600"}>{user?.displayName}</Typo>
           </View>
-          <TouchableOpacity style={styles.searchIcon}>
+          <TouchableOpacity onPress={() => router.push('/(modals)/searchModal')} style={styles.searchIcon}>
             <MagnifyingGlassIcon 
               size={verticaleScale(22)}
               color={colors.white}

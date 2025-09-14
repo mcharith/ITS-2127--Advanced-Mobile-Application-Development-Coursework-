@@ -13,7 +13,6 @@ export const getLast7Days = () => {
     });
   }
   return result.reverse();
-  // returns an array of all the previous 7 days
 };
 
 export const getLast12Months = () => {
@@ -39,7 +38,7 @@ export const getLast12Months = () => {
 
     const monthName = monthsOfYear[date.getMonth()];
     const shortYear = date.getFullYear().toString().slice(-2);
-    const formattedMonthYear = `${monthName} ${shortYear}`; // Jan 24, Feb 25
+    const formattedMonthYear = `${monthName} ${shortYear}`;
     const formattedDate = date.toISOString().split("T")[0];
 
     result.push({
@@ -50,7 +49,6 @@ export const getLast12Months = () => {
     });
   }
 
-  // return result;
   return result.reverse();
 };
 
@@ -64,6 +62,5 @@ export const getYearsRange = (startYear: number, endYear: number): any => {
       expense: 0,
     });
   }
-  // return result;
   return result.reverse();
 };
