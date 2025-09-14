@@ -1,6 +1,6 @@
 import { db } from "@/firebase";
 import { ResponseType, TransactionType, WalletType } from "@/types";
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { uploadFileToCloudinary } from "./imageService";
 import { createOrUpdateWallet } from "./walletService";
 
@@ -193,3 +193,58 @@ const revertAndUpdateWallets = async (
         return {success: false, msg:err.message}
       }
 }
+
+export const deleteTransaction = async (
+  transactionId: string,
+  walletId: string
+) => {
+  try {
+    const transactionRef = doc(db, "transactions", transactionId);
+    const transactionSnapshot = await getDoc(transactionRef);
+
+    if (!transactionSnapshot.exists()) {
+      return { success: false, msg: "Transaction not found." };
+    }
+
+    const transactionData = transactionSnapshot.data() as TransactionType;
+
+    const transactionType = transactionData?.type;
+    const transactionAmount = Number(transactionData?.amount);
+
+    const walletRef = doc(db, "wallets", walletId);
+    const walletSnapshot = await getDoc(walletRef);
+    if (!walletSnapshot.exists()) {
+      return { success: false, msg: "Wallet not found." };
+    }
+
+    const walletData = walletSnapshot.data() as WalletType;
+
+    const updateType =
+      transactionType === "income" ? "totalIncome" : "totalExpenses";
+
+    const newWalletAmount =
+      transactionType === "income"
+        ? walletData.amount! - transactionAmount
+        : walletData.amount! + transactionAmount;
+
+    const newIncomeExpensesAmount =
+      walletData[updateType]! - transactionAmount;
+
+    if (transactionType === "income" && newWalletAmount < 0) {
+      return { success: false, msg: "You cannot delete this transaction." };
+    }
+
+    await createOrUpdateWallet({
+      id: walletId,
+      amount: newWalletAmount,
+      [updateType]: newIncomeExpensesAmount,
+    });
+
+    await deleteDoc(transactionRef);
+
+    return { success: true };
+  } catch (err: any) {
+    console.log("error deleting transaction:", err);
+    return { success: false, msg: err.message };
+  }
+};
