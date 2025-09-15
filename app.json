@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/money-bag.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.charithms.expensetrackerapp"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "b65808b0-0753-4d48-b248-46baa855e738"
+      }
     }
   }
 }
