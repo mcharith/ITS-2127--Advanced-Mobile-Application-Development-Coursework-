@@ -49,7 +49,7 @@ const Welcome = () => {
             entering={FadeInDown.duration(1000).delay(200).springify().damping(12)}
             style={styles.buttonContainer}>
           <Button onPress={()=> router.push('/(auth)/register')}>
-            <Typo size={22} fontWeight={"600"} color={colors.neutral900}>Get Started</Typo>
+            <Typo size={22} fontWeight={"600"} color={colors.white}>Get Started</Typo>
           </Button>
           </Animated.View>
 
@@ -59,7 +59,7 @@ const Welcome = () => {
   )
 }
 
-export default Welcome
+export default Welcome;
 
 const styles = StyleSheet.create({
   container:{
