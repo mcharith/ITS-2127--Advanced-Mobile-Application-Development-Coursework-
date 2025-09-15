@@ -73,6 +73,6 @@ With this app, you can easily track your **expenses** and **income** with a clea
 ![Profile Tab](./readmeImages/profile-tab.png)
 
 
-## 🎥 Demo Video
+## 🎥 Demo Video(Click This)
 
 [![EXPENSIO Demo Video](./readmeImages/expense-tracker-app-thumbnail.png)](https://youtu.be/mL4xf_lsM4I)
