@@ -1,50 +1,78 @@
-# Welcome to your Expo app 👋
+# 💰 EXPENSIO - Expense Tracker App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Hello 👋,  
+This is **EXPENSIO**, my Expense Tracker App built with **React Native** and **Expo**.  
+With this app, you can easily track your **expenses** and **income** with a clean and simple UI.  
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+### 🔐 Authentication
+- **Welcome Page**  
+  - "Get Started" → Navigate to **Registration Page**  
+  - "Sign In" → Log in with existing account  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+### 👤 User Tab
+- Upload profile picture  
+- Change username  
+- Logout  
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 👛 Wallet Tab
+- See your **Total Balance**  
+- Create multiple wallets (e.g., personal savings, daily expenses, trip fund)  
+- Add a wallet with **name & image**  
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+### 🏠 Home Tab
+- Summary card with **balance, income, and expenses**  
+- View recent transactions  
+- Add new **expense** or **income**  
+- Update or delete transactions  
+- Search transactions quickly  
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+### 📊 Statistics Tab
+- Visual breakdown of **income vs. expenses**  
+- Bar chart: 🟩 Income | 🟥 Expenses  
+- Filter by **weekly, monthly, yearly**  
+- Detailed list of transactions  
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🛠️ Tech Stack
 
-To learn more about developing your project with Expo, look at the following resources:
+- **React Native** (Frontend)  
+- **Expo** (Development & Testing)  
+- **Firebase Authentication** (User login/register)  
+- **Firebase Firestore** (Data storage)  
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 📸 Screenshots
 
-Join our community of developers creating universal apps.
+### 🏠 Welcome Page
+![Welcome Page](./readmeImages/welcome-page.png)
+### 👛 Login Page
+![Login Page](./readmeImages/login-page.png)
+### 👛 Sign up Page
+![Sign up Page](./readmeImages/sign-up-page.png)
+### 👛 Home Tab
+![Home Tab](./readmeImages/home-tab.png)
+### 👛 Statistics Tab
+![Statistics Tab](./readmeImages/statistics-tab.png)
+### 👛 Wallet Tab
+![Wallet Tab](./readmeImages/wallet-tab.png)
+### 👛 Profile Tab
+![Profile Tab](./readmeImages/profile-tab.png)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## 🎥 Demo Video
+
+[![EXPENSIO Demo Video](./readmeImages/expense-tracker-app-thumbnail.png)](https://youtu.be/mL4xf_lsM4I)
